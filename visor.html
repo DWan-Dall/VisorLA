@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="br">
+<head>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Visor</title>
+    <style>
+        .div-inline {
+            width: 600px;
+            height: 100px;
+            display: inline-block;
+        }
+        .setor {
+            font-family: "Arial Narrow";
+            font-weight: bold;
+            color: cadetblue;
+            font-size: 90px;
+            margin: 0;
+        }
+        .prioridade {
+            font-size: 35px;
+            color: rgba(204, 29, 52, 0.89);
+            margin: 0;
+        }
+        .numeracao {
+            font-family: "Arial Narrow";
+            font-weight: bold;
+            color: dimgray;
+            font-size: 150px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+<!--<div style="text-align: center; padding: 2%;">-->
+<!--    <img src="images/847730_BRASAO_LUIZ_ALVES.jpg" alt="Brasão Luiz Alves" style="width: 10%"/>-->
+<!--</div>-->
+
+<div style="text-align: center; margin-top: 10%;">
+    <div class="div-inline">
+        <p class="setor">FARMÁCIA</p>
+        <p class="prioridade">PRIORITÁRIO</p>
+        <p class="numeracao">05</p>
+    </div>
+    <div class="div-inline">
+        <p class="setor">RECEPÇÃO</p>
+        <p class="prioridade">PRIORITÁRIO</p>
+        <p class="numeracao">02</p>
+    </div>
+</div>
+<img src="public/assets/images/Footer%20Luiz%20Alves.png" style="margin-left: 5%; opacity: 38%;">
+<footer class="footer mt-4 pt-4 pt-md-4 border-top">
+    <div class="col-12 col-md text-center">
+        <small class="d-block mb-3 text-muted">
+            &copy; <?php echo (new DateTime('now'))->format('Y'); ?> - Desenvolvido por Irmãos Wan-Dall
+        </small>
+    </div>
+</footer>
+</body>
+</html>
