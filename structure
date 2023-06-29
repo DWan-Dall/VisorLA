@@ -1,0 +1,31 @@
+simple-mvc
+├── Application/
+│   ├── controllers/
+│   │   ├── Home.php
+│   │   └── User.php
+│   ├── core/
+│   │   ├── App.php
+│   │   ├── Controller.php
+│   │   └── Database.php
+│   ├── models/
+│   │   └── Users.php
+│   ├── views/
+│   │   ├── home/
+│   │   │   └── index.php
+│   │   └── user/
+│   │       ├── index.php
+│   │       └── show.php
+│   ├── .htaccess
+│   └── autoload.php
+│
+└── public/
+    ├── assets/
+    │    ├── css/
+    │    │   └── bootstrap.min.css
+    │    ├── img/
+    │    │   └── erro.png
+    │    └── js/
+    │        ├── bootstrap.min.js
+    │        └── jquery.slim.min.js
+    ├── .htaccess
+    └── index.php
