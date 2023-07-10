@@ -1,22 +1,21 @@
 <?php
-include '../VisorLA/Application/core/Database.php';
-//namespace model;
+include '../VisorLA/Application/core/Conexao.php';
 
 class Visor
 {
-//    public $conn;
     public $id;
     public $usuario;
     public $local;
     public $senha;
     public $n_chamado_normal;
+    public $ult_atualizacao_normal;
     public $n_chamado_prioritario;
-    public $ult_atualizacao;
-    public $visor = array();
+    public $ult_atualizacao_prioritario;
+    public $conectar;
 
-//    public function __construct($nova_conexao){
-//        $this->conexao = $nova_conexao;
-//    }
+    public function __construct(){
+        $this->conectar = Conexao::getInstance();
+    }
 
     public function getId(){
         return $this->id;
@@ -58,6 +57,14 @@ class Visor
         $this->n_chamado_normal=$n_chamado_normal;
     }
 
+    public function getUlt_atualizacao_normal(){
+        return $this->ult_atualizacao_normal;
+    }
+
+    public function setUlt_atualizacao_normal($ult_atualizacao_normal){
+        $this->ult_atualizacao_normal=$ult_atualizacao_normal;
+    }
+
     public function getN_chamado_prioritario(){
         return $this->n_chamado_prioritario;
     }
@@ -66,20 +73,30 @@ class Visor
         $this->n_chamado_prioritario=$n_chamado_prioritario;
     }
 
-    public function getUlt_atualizacao(){
-        return $this->ult_atualizacao;
+    public function getUlt_atualizacao_prioritario(){
+        return $this->ult_atualizacao_prioritario;
     }
 
-    public function setUlt_atualizacao($ult_atualizacao){
-        $this->ult_atualizacao=$ult_atualizacao;
+    public function setUlt_atualizacao($ult_atualizacao_prioritario){
+        $this->ult_atualizacao_prioritario=$ult_atualizacao_prioritario;
     }
 
-    public function buscar_visor($id) {
-        $sqlBusca = 'SELECT * FROM visor-saude-la.acesso WHERE id = ' . $id;
-        $result = mysqli_query($this->conn, $sqlBusca);
-
-        $this->visor = mysqli_fetch_assoc($result);
+    public function listarVisores() {
+        $stmt = $this->conectar->prepare("SELECT * FROM acesso ORDER BY local ASC");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_CLASS, static::class);
     }
 
+    public function carregarVisores($id) {
+        $this->setId($id);
+        $stmt = $this->conectar->prepare("SELECT * FROM acesso WHERE id = :ID");
+        $stmt->execute(array(":ID" => $this->id));
+        $stmt->setFetchMode(PDO::FETCH_CLASS, static::class);
+        return $stmt->fetch();
+    }
+
+//    public function verificaMudanca() {
+//
+//    }
 
 }

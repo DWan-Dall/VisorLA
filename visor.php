@@ -1,63 +1,57 @@
 <?php
 //session_start();
-
+//ob_start();
 require_once '../VisorLA/model/Visor.php';
 
-//$visor = new Visor();
-//
-//var_dump($visor);
-//
-//echo $visor->buscar_visor(2);
+$visor = new Visor();
+$visor = $visor->listarVisores();
 
-//var_dump($visor);
-
-//$query = sprintf("SELECT id, local, n_chamado_normal, n_chamado_prioritario
-//                            FROM acesso");
-//
-//$dados = mysql_query($query, $conn) or die (mysql_error());
-//
-//$linha = mysql_fetch_assoc($dados);
-//$total = mysql_num_rows($dados);
-
+//var_dump($_SESSION);
 
 ?>
 
 <!DOCTYPE html>
 <html lang="br">
 <head>
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+    <link href="style.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<!--    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+<!--    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
     <meta charset="UTF-8">
     <title>Visor</title>
     <style>
-        .div-inline {
-            width: 600px;
-            height: 100px;
-            display: inline-block;
-        }
-        .setor {
-            font-family: "Arial Narrow";
-            font-weight: bold;
-            color: cadetblue;
-            font-size: 90px;
-            margin: 0;
-        }
-        .prioridade {
-            font-size: 35px;
-            color: rgba(204, 29, 52, 0.89);
-            margin: 0;
-        }
-        .numeracao {
-            font-family: "Arial Narrow";
-            font-weight: bold;
-            color: dimgray;
-            font-size: 150px;
-            margin: 0;
+        #numeracao {
+            opacity: 1;
+            transition-duration: 0.5s;
         }
     </style>
 </head>
-<body>
+<body style="text-align: center; margin-top: 2%;">
+<script>
+    var teste = 0;
+    setInterval(piscar, 400);
+    function piscar(){
+        if(teste<1) {
+            teste++;
+            document.getElementById('numeracao').style.opacity = '1';
+        } else {
+            teste = 0;
+            document.getElementById('numeracao').style.opacity = '0';
+        }
+    }
+    $(function () {
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 2000);
+
+    });
+</script>
+<div style="text-align: center; inset-inline: 10px">
+    <img src="public/images/BRASAO_REDIMENSIONADO.jpg" alt="Brasão Luiz Alves" style="width: 5%"/>
+    <h3 class="secretaria">SECRETARIA MUNICIPAL DE SAÚDE</h3>
+</div>
+<div id="conteudo">
 <?php
 // verificar se vai algum dado desses:
 
@@ -66,30 +60,56 @@ require_once '../VisorLA/model/Visor.php';
 //    echo "Hoje é: $data";
 //    echo " agora são: " . date('j jS \of F H:i A');
 //    echo " da semana: " . (jddayofweek($data2,1));
-//?>
-<div style="text-align: center; margin-top: 2%">
-    <a href="index.php">
-        <img src="public/images/847730_BRASAO_LUIZ_ALVES.jpg" alt="Brasão Luiz Alves" style="width: 8%"/>
-    </a>
-</div>
+//
+foreach ($visor as $visores) {
+    $id = $visores->getId();
+    $local = $visores->getLocal();
+    $senhaNormal = $visores->getN_chamado_normal();
+    $senhaPrioritario = $visores->getN_chamado_prioritario();
+    $ult_atualizacao_normal = $visores->getUlt_atualizacao_normal();
+    $ult_atualizacao_prioritario = $visores->getUlt_atualizacao_prioritario();
 
-<div style="text-align: center; margin-top: 2%;">
-    <div class="div-inline">
-        <p class="setor">FARMÁCIA</p>
+    if ($local != 'ADMINISTRAÇÃO') {
+?>
+    <div  class="div-inline" style="text-align: center; margin-top: 5%;">
+        <p class="setor"><?php echo $local; ?></p>
+        <?php
+            if ($ult_atualizacao_prioritario >= $ult_atualizacao_normal) {
+        ?>
         <p class="prioridade"><?php echo  'PRIORITÁRIO'; ?></p>
-<!--        <p class="numeracao">--><?php //echo $_SESSION['n_chamado_normal']; ?><!--</p>-->
-    </div>
-    <div class="div-inline">
-        <p class="setor">RECEPÇÃO</p>
-        <p class="prioridade">PRIORITÁRIO</p>
-        <p class="numeracao">02</p>
-    </div>
+        <p class="numeracao" id="numeracao"><?php echo $senhaPrioritario; ?></p>
+                <?php
+            } else {
+                ?>
+        <p class="prioridade-normal"><?php echo 'NORMAL'; ?></p>
+        <p class="numeracao" id="numeracao"><?php echo $senhaNormal; ?></p>
+        <?php
+            }
+            ?>
+            </div>
+    <?php
+    }
+    date_default_timezone_set('America/Sao_Paulo');
+    $now = date('Y-m-d H:i:s');
+//    var_dump($ult_atualizacao_normal);
+//    var_dump($ult_atualizacao_prioritario);
+//    var_dump($now);
+    if (($ult_atualizacao_normal || $ult_atualizacao_prioritario) == $now) {
+        echo "<script type='text/javascript'>
+            var audio = new Audio('public/sounds/chamada.mp3');
+                audio.play();
+          </script>";
+    }
+}
+    ?>
 </div>
 <img src="public/images/Footer%20Luiz%20Alves.png" style="margin-left: 5%; opacity: 38%;">
 <footer class="footer mt-4 pt-4 pt-md-4 border-top">
     <div class="col-12 col-md text-center">
         <small class="d-block mb-3 text-muted">
             &copy; <?php echo (new DateTime('now'))->format('Y'); ?> - Desenvolvido por Irmãos Wan-Dall
+            <br>
+            <a class="underlineHover" href="index.php">Acessar Login</a>
         </small>
     </div>
 </footer>
