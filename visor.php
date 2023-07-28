@@ -6,7 +6,13 @@ require_once '../VisorLA/model/Visor.php';
 $visor = new Visor();
 $visor = $visor->listarVisores();
 
+//$post = $_REQUEST['res'];
+////$get = $_GET;
+//var_dump($post);
+//var_dump($get);
 //var_dump($_SESSION);
+
+
 
 ?>
 
@@ -29,17 +35,6 @@ $visor = $visor->listarVisores();
 </head>
 <body style="text-align: center; margin-top: 2%;">
 <script>
-    var teste = 0;
-    setInterval(piscar, 400);
-    function piscar(){
-        if(teste<1) {
-            teste++;
-            document.getElementById('numeracao').style.opacity = '1';
-        } else {
-            teste = 0;
-            document.getElementById('numeracao').style.opacity = '0';
-        }
-    }
     $(function () {
         setTimeout(function () {
             window.location.reload(1);
@@ -53,14 +48,6 @@ $visor = $visor->listarVisores();
 </div>
 <div id="conteudo">
 <?php
-// verificar se vai algum dado desses:
-
-//    $data = date('d/m/Y');
-//    $data2 = cal_to_jd(CAL_GREGORIAN,date("m"), date("d"), date("Y"));
-//    echo "Hoje é: $data";
-//    echo " agora são: " . date('j jS \of F H:i A');
-//    echo " da semana: " . (jddayofweek($data2,1));
-//
 foreach ($visor as $visores) {
     $id = $visores->getId();
     $local = $visores->getLocal();
@@ -89,21 +76,33 @@ foreach ($visor as $visores) {
             </div>
     <?php
     }
-    date_default_timezone_set('America/Sao_Paulo');
-    $now = date('Y-m-d H:i:s');
+//    date_default_timezone_set('America/Sao_Paulo');
+//    $now = date('Y-m-d H:i:s');
 //    var_dump($ult_atualizacao_normal);
 //    var_dump($ult_atualizacao_prioritario);
 //    var_dump($now);
-    if (($ult_atualizacao_normal || $ult_atualizacao_prioritario) == $now) {
-        echo "<script type='text/javascript'>
-            var audio = new Audio('public/sounds/chamada.mp3');
-                audio.play();
-          </script>";
-    }
+//    if (($ult_atualizacao_normal || $ult_atualizacao_prioritario) == $now) {
+//        echo "<script type='text/javascript'>
+//                var teste = 0;
+//                setInterval(piscar, 400);
+//                function piscar(){
+//                    if(teste<1) {
+//                        teste++;
+//                        document.getElementById('numeracao').style.opacity = '1';
+//                    } else {
+//                        teste = 0;
+//                        document.getElementById('numeracao').style.opacity = '0';
+//                    }
+//                }
+//
+//                var audio = new Audio('public/sounds/chamada.mp3');
+//                    audio.play();
+//              </script>";
+//    }
 }
     ?>
 </div>
-<img src="public/images/Footer%20Luiz%20Alves.png" style="margin-left: 5%; opacity: 38%;">
+<img src="public/images/Footer%20Luiz%20Alves.png" alt="Rodapé-Luiz-Alves" style="margin-left: 5%; opacity: 38%;">
 <footer class="footer mt-4 pt-4 pt-md-4 border-top">
     <div class="col-12 col-md text-center">
         <small class="d-block mb-3 text-muted">
