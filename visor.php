@@ -1,16 +1,37 @@
 <?php
-//session_start();
-//ob_start();
 require_once '../VisorLA/model/Visor.php';
 
 $visor = new Visor();
 $visor = $visor->listarVisores();
+
+//if (isset($_POST["normal"])){
+//    $_SESSION['n_chamado_normal'] +=1;
+////    header('Location: http://localhost:63342/VisorLA/visor.php?res=01');
+//    header("Location: dashboard.php");
+//}
+//
+//if (isset($_POST["prioritario"])){
+//    $_SESSION['n_chamado_prioritario'] +=1;
+//    header("Location: dashboard.php");
+//}
+//
+//
+
+
 
 //$post = $_REQUEST['res'];
 ////$get = $_GET;
 //var_dump($post);
 //var_dump($get);
 //var_dump($_SESSION);
+
+
+////Se funcionar, talvez tire o reload
+//if ($_REQUEST['res'] == 01) {
+//    echo "<script>
+//
+//          </script>";
+//}
 
 
 
