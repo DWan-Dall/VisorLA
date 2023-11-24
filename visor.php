@@ -1,8 +1,13 @@
 <?php
 require_once '../VisorLA/model/Visor.php';
+require_once '../VisorLA/model/Admin.php';
 
 $visor = new Visor();
 $visor = $visor->listarVisores();
+
+$admin = new Admin();
+$administrador = $admin->carregarDados('1');
+
 
 //if (isset($_POST["normal"])){
 //    $_SESSION['n_chamado_normal'] +=1;
@@ -71,13 +76,14 @@ $visor = $visor->listarVisores();
 <?php
 foreach ($visor as $visores) {
     $id = $visores->getId();
-    $local = $visores->getLocal();
+    $local = $visores->getSetor();
     $senhaNormal = $visores->getN_chamado_normal();
     $senhaPrioritario = $visores->getN_chamado_prioritario();
     $ult_atualizacao_normal = $visores->getUlt_atualizacao_normal();
     $ult_atualizacao_prioritario = $visores->getUlt_atualizacao_prioritario();
 
     if ($local != 'ADMINISTRAÇÃO') {
+        if ($administrador->getAtivar_prioritario() == 1) {
 ?>
     <div  class="div-inline" style="text-align: center; margin-top: 5%;">
         <p class="setor"><?php echo $local; ?></p>
@@ -96,7 +102,17 @@ foreach ($visor as $visores) {
             ?>
             </div>
     <?php
+        } ?>
+
+    <div  class="div-inline" style="text-align: center; margin-top: 5%;">
+        <p class="setor"><?php echo $local; ?></p>
+
+        <p class="prioridade-normal"><?php echo 'NORMAL'; ?></p>
+        <p class="numeracao" id="numeracao"><?php echo $senhaNormal; ?></p>
+    </div>
+    <?php
     }
+
 //    date_default_timezone_set('America/Sao_Paulo');
 //    $now = date('Y-m-d H:i:s');
 //    var_dump($ult_atualizacao_normal);
@@ -125,7 +141,7 @@ foreach ($visor as $visores) {
 </div>
 <img src="public/images/Footer%20Luiz%20Alves.png" alt="Rodapé-Luiz-Alves" style="margin-left: 5%; opacity: 38%;">
 <footer class="footer mt-4 pt-4 pt-md-4 border-top">
-    <div class="col-12 col-md text-center">
+    <div class="col-12 col-md text-center" style="padding-bottom: 5px;">
         <small class="d-block mb-3 text-muted">
             &copy; <?php echo (new DateTime('now'))->format('Y'); ?> - Desenvolvido por Irmãos Wan-Dall
             <br>

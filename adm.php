@@ -1,11 +1,15 @@
 <?php
 include_once '../VisorLA/Application/core/Database.php';
 include '../VisorLA/model/Visor.php';
+include '../VisorLA/model/Admin.php';
 
 session_start();
 ob_start();
 
 $visor = new Visor();
+$admin = new Admin();
+
+$admin = $admin->carregarDados(1);
 
 if (isset($_POST['zerar-normal'])){
     $id = $_POST['zerar-normal'];
@@ -42,5 +46,16 @@ if (isset($_POST['zerar-prioritario'])){
                         WHERE id={$id}";
     $result_update = $conn->prepare($query_update);
     $result_update->execute();
+
+//    $usuario_adm = $visor->getUsuario_adm();
+//    if ($_SESSION != $usuario_adm) {
+//        ob_start();
+//    }
+
     header("Location: dashboard.php");
 }
+
+if (isset($_POST['ligar_prioritario'])) {
+    $administrador = $admin->carregarDados(1);
+}
+
