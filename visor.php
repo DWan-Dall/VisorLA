@@ -8,7 +8,6 @@ $visor = $visor->listarVisores();
 $admin = new Admin();
 $administrador = $admin->carregarDados('1');
 
-
 //if (isset($_POST["normal"])){
 //    $_SESSION['n_chamado_normal'] +=1;
 ////    header('Location: http://localhost:63342/VisorLA/visor.php?res=01');
@@ -102,7 +101,8 @@ foreach ($visor as $visores) {
             ?>
             </div>
     <?php
-        } ?>
+        } else {
+            ?>
 
     <div  class="div-inline" style="text-align: center; margin-top: 5%;">
         <p class="setor"><?php echo $local; ?></p>
@@ -111,6 +111,7 @@ foreach ($visor as $visores) {
         <p class="numeracao" id="numeracao"><?php echo $senhaNormal; ?></p>
     </div>
     <?php
+    }
     }
 
 //    date_default_timezone_set('America/Sao_Paulo');
@@ -139,7 +140,9 @@ foreach ($visor as $visores) {
 }
     ?>
 </div>
+<div style="text-align: center">
 <img src="public/images/Footer%20Luiz%20Alves.png" alt="Rodapé-Luiz-Alves" style="margin-left: 5%; opacity: 38%;">
+</div>
 <footer class="footer mt-4 pt-4 pt-md-4 border-top">
     <div class="col-12 col-md text-center" style="padding-bottom: 5px;">
         <small class="d-block mb-3 text-muted">

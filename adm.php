@@ -9,7 +9,7 @@ ob_start();
 $visor = new Visor();
 $admin = new Admin();
 
-$admin = $admin->carregarDados(1);
+
 
 if (isset($_POST['zerar-normal'])){
     $id = $_POST['zerar-normal'];
@@ -39,7 +39,6 @@ if (isset($_POST['zerar-prioritario'])){
     $zerarPrioritario = $visorPrioritario->getN_chamado_prioritario();
     $zerarPrioritario -= $zerarPrioritario;
     $visorPrioritario = intval($visorPrioritario->setN_chamado_prioritario($zerarPrioritario));
-    var_dump($visorPrioritario);
 
     $query_update = "UPDATE `acesso`
                         SET n_chamado_prioritario={$visorPrioritario}, ult_atualizacao_prioritario=now()
@@ -55,7 +54,18 @@ if (isset($_POST['zerar-prioritario'])){
     header("Location: dashboard.php");
 }
 
+$botao_ativar = $_POST['ligar_prioritario'];
+var_dump($botao_ativar);
+
+$administrador = $admin->carregarDados(1);
+$visorPrioritario = $administrador->getAtivar_prioritario();
+
+var_dump($visorPrioritario);
+
 if (isset($_POST['ligar_prioritario'])) {
     $administrador = $admin->carregarDados(1);
+    $visorPrioritario = $administrador->getAtivar_prioritario();
+
+
 }
 

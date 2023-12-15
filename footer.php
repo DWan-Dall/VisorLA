@@ -1,4 +1,6 @@
-<img src="public/images/Footer%20Luiz%20Alves.png" style="margin-left: 5%; opacity: 38%;">
+<div style="text-align: center">
+    <img src="public/images/Footer%20Luiz%20Alves.png" style="margin-left: 5%; opacity: 38%;">
+</div>
 <footer class="footer mt-4 pt-4 pt-md-4 border-top">
     <div class="col-12 col-md text-center">
         <small class="d-block mb-3 text-muted">

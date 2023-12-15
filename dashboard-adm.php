@@ -86,7 +86,7 @@ if ($chamadoNormal != $valorVisorNormal) {
                 <i class="fa-solid fa-person-booth fa-xs"></i> Aparência</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="imagens-tab" data-toggle="tab" href="#imagens" role="tab" aria-controls="contact" aria-selected="false">
+            <a class="nav-link" id="historico-tab" data-toggle="tab" href="#historico" role="tab" aria-controls="contact" aria-selected="false">
                 <i class="fa-solid fa-clock-rotate-left fa-xs"></i> Histórico</a>
         </li>
     </ul>
@@ -186,17 +186,30 @@ if ($chamadoNormal != $valorVisorNormal) {
                         </table>
                     </div>
                 </div>
+
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="ligar_prioritario">
-                    <label class="custom-control-label" for="flexSwitchCheckDefault"> Atendimento Prioritário</label>
+                    <input class="form-check-input" type="checkbox" id="ligar_prioritario" name="ligar_prioritario" value="<?php echo $administrador->getAtivar_prioritario(); ?>" <?php if ($administrador->getAtivar_prioritario() == 1) { echo 'checked'; } ?>>
+                    <label class="custom-control-label" for="ligar_prioritario"> Atendimento Prioritário</label>
                 </div>
+
+                <?php var_dump($administrador->getAtivar_prioritario()); ?>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="ligar_normal">
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="ligar_normal" <?php if ($administrador->getAtivar_prioritario() == 1) { echo 'disabled';} ?>>
                     <label class="custom-control-label" for="flexSwitchCheckDefault"> Renomear Atendimento Normal</label>
                 </div>
                 <div>
-                    <input type="text">
+                    <input type="text" <?php if ($administrador->getAtivar_prioritario() == 1) { echo 'disabled'; } ?>>
                 </div>
+<!--                <div class="toggle">-->
+<!--                    <div class="custom-control custom-switch">-->
+<!--                        <input type="checkbox"-->
+<!--                               class="custom-control-input"-->
+<!--                               id="toggleSwitches">-->
+<!--                        <label class="custom-control-label"-->
+<!--                               for="toggleSwitches">-->
+<!--                            TOGGLE</label>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
 
@@ -318,7 +331,7 @@ if ($chamadoNormal != $valorVisorNormal) {
         </div>
 
         <!--                Aba Histórico-->
-        <div role="tabpanel" class="tab-pane" id="imagens">
+        <div role="tabpanel" class="tab-pane" id="historico">
             <div style="padding-top: 30px;">
                 <p>Histórico de acontecimentos e mudanças realizadas no sistema.</p>
             </div>
@@ -327,7 +340,22 @@ if ($chamadoNormal != $valorVisorNormal) {
 
     </div>
 </div>
-
+<script>
+    document.getElementById("ligar_prioritario").onclick = function () {
+        if (ligar_prioritario.checked) {
+            alert('ATIVADO');
+        } else {
+            var resultado = confirm("Deseja realmente DESATIVAR a funcão de chamados Prioritários?");
+            if (resultado == true) {
+                alert("Função desativada com sucesso!");
+            } else {
+                alert("A função permanecerá ativa!");
+                
+        }
+        }
+    }
+</script>
 <!--Rodapé-->
 <?php
 include_once '../VisorLA/footer.php';
+
